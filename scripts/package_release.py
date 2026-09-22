@@ -15,7 +15,7 @@ TOP_FILES = {"README.md", "LICENSE", "VERSION", "RELEASE_NOTES.md", "THIRD_PARTY
 
 
 def allowed(rel):
-    s = str(rel)
+    s = rel.as_posix()
     if s in TOP_FILES or s in GENERATED:
         return True
     if "__pycache__" in rel.parts or rel.name.startswith("."):
@@ -61,7 +61,7 @@ def purpose(path):
         ("ui/", "Standalone local review interface / 独立本地审核界面"),
         ("modules/", "Numbered module guide / 编号模块说明"),
         ("docs/", "Numbered deployment documentation / 部署文档")]
-    return next((v for k,v in categories if str(rel).startswith(k)), "Release source or metadata / 发布源码与元数据")
+    return next((v for k,v in categories if rel.as_posix().startswith(k)), "Release source or metadata / 发布源码与元数据")
 
 
 def build(output, components=False, platforms=False):
@@ -76,13 +76,13 @@ def build(output, components=False, platforms=False):
             if "/Users/" in content and p.name not in {"package_release.py", "test_portal.py"}:
                 raise ValueError(f"Personal absolute path in {rel}")
     index = ["# File Index / 逐文件索引", "", "路径为发布根目录相对路径。编号模块导航见 modules；不更名原 Python 导入模块。", "", "| File | Purpose / 用途 |", "|---|---|"]
-    index += [f"| `{p.relative_to(ROOT)}` | {purpose(p)} |" for p in files]
+    index += [f"| `{p.relative_to(ROOT).as_posix()}` | {purpose(p)} |" for p in files]
     (ROOT / "FILE_INDEX.md").write_text("\n".join(index) + "\n")
     manifest = {"version": VERSION, "author": "Safety Horizon--Lrj", "license": "MIT", "contains_factory_data": False,
-                "policy": "explicit allowlist; models/environments/runtime/annotations excluded", "files": [str(p.relative_to(ROOT)) for p in files]}
+                "policy": "explicit allowlist; models/environments/runtime/annotations excluded", "files": [p.relative_to(ROOT).as_posix() for p in files]}
     (ROOT / "BUILD_MANIFEST.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
     files += [ROOT / "FILE_INDEX.md", ROOT / "BUILD_MANIFEST.json"]
-    checksums = "".join(f"{hashlib.sha256(p.read_bytes()).hexdigest()}  {p.relative_to(ROOT)}\n" for p in sorted(files))
+    checksums = "".join(f"{hashlib.sha256(p.read_bytes()).hexdigest()}  {p.relative_to(ROOT).as_posix()}\n" for p in sorted(files))
     (ROOT / "SHA256SUMS").write_text(checksums)
     files.append(ROOT / "SHA256SUMS")
     names = [(f"SafetyHorizon-v{VERSION}-source.zip", None)]
@@ -98,7 +98,7 @@ def build(output, components=False, platforms=False):
             for p in sorted(files):
                 if module and platforms and p.name == 'SHA256SUMS':
                     continue
-                z.write(p, "SafetyHorizon/" + str(p.relative_to(ROOT)))
+                z.write(p, "SafetyHorizon/" + p.relative_to(ROOT).as_posix())
             if module:
                 if platforms:
                     intro = (module / 'README.md').read_text(encoding='utf-8').encode('utf-8')

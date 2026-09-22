@@ -41,7 +41,9 @@ class OwnedJob:
         self.handle = None
         if os.name == 'nt':
             import win32job
-            self.handle = win32job.CreateJobObject(None, None)
+            # A unique name works with pywin32 builds that reject a null name.
+            import uuid
+            self.handle = win32job.CreateJobObject(None, 'SafetyHorizon-' + uuid.uuid4().hex)
             info = win32job.QueryInformationJobObject(self.handle, win32job.JobObjectExtendedLimitInformation)
             info['BasicLimitInformation']['LimitFlags'] |= win32job.JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE
             win32job.SetInformationJobObject(self.handle, win32job.JobObjectExtendedLimitInformation, info)
