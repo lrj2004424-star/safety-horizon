@@ -1,0 +1,121 @@
+{
+  "station_id": "cutting_press_pilot_01",
+  "camera": {
+    "index": 0,
+    "width": 1280,
+    "height": 720,
+    "fps": 30,
+    "mirror": false,
+    "fixed_guard": {
+      "enabled": false,
+      "reference_image": null,
+      "anchor_rois": [
+        [[0.02, 0.04], [0.24, 0.04], [0.24, 0.2], [0.02, 0.2]]
+      ],
+      "check_interval_frames": 10,
+      "min_matches": 18,
+      "max_translation_px": 8.0,
+      "max_rotation_deg": 1.5,
+      "max_scale_deviation": 0.025
+    }
+  },
+  "model": {
+    "path": "models/hand_landmarker.task",
+    "num_hands": 2,
+    "min_detection_confidence": 0.55,
+    "min_presence_confidence": 0.55,
+    "min_tracking_confidence": 0.55
+  },
+  "pose": {
+    "model_path": "models/pose_landmarker_lite.task",
+    "num_poses": 2,
+    "min_detection_confidence": 0.5,
+    "min_presence_confidence": 0.5,
+    "min_tracking_confidence": 0.5,
+    "min_landmark_visibility": 0.45
+  },
+  "machine": {
+    "motion_roi": [
+      [0.2, 0.42],
+      [0.76, 0.42],
+      [0.73, 0.66],
+      [0.17, 0.66]
+    ],
+    "reference_roi": [
+      [0.02, 0.04],
+      [0.24, 0.04],
+      [0.24, 0.2],
+      [0.02, 0.2]
+    ],
+    "global_motion_threshold": 2.2,
+    "min_motion_pixels": 0.035,
+    "vertical_motion_threshold": 0.45,
+    "smoothing": 0.5,
+    "direction_hold_frames": 3,
+    "min_directional_coherence": 0.62,
+    "calibrated_with_empty_cycles": false,
+    "exclusion_radius_px": 42,
+    "max_excluded_fraction": 0.45
+  },
+  "machine_truth": {
+    "mode": "none",
+    "path": null,
+    "max_age_s": 0.25,
+    "required_for_danger": true
+  },
+  "audio_alerts": {
+    "enabled": true,
+    "live_only": true,
+    "assets_dir": "assets/sounds",
+    "volume": 0.72,
+    "startup_grace_s": 2.0,
+    "system_voice_enabled": true,
+    "system_voice_name": "Tingting",
+    "system_voice_rate": 210,
+    "attention_repeat_s": 15.0,
+    "warning_repeat_s": 12.0,
+    "danger_repeat_s": 10.0,
+    "uncertain_repeat_s": 15.0,
+    "fault_repeat_s": 10.0
+  },
+  "risk": {
+    "warning_zone": [
+      [0.3, 0.24],
+      [0.72, 0.24],
+      [0.8, 0.82],
+      [0.2, 0.82]
+    ],
+    "danger_zone": [
+      [0.4, 0.35],
+      [0.63, 0.35],
+      [0.68, 0.72],
+      [0.34, 0.72]
+    ],
+    "relevant_landmarks": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+    "enter_attention_frames": 3,
+    "enter_warning_frames": 3,
+    "enter_danger_frames": 2,
+    "enter_uncertain_frames": 3,
+    "clear_frames": 6,
+    "prediction_horizon_s": 0.8,
+    "approach_speed_threshold": 0.18,
+    "speed_smoothing": 0.55,
+    "danger_dwell_s": 0.35,
+    "hand_missing_grace_s": 0.25,
+    "pose_missing_grace_s": 0.5,
+    "min_hand_confidence": 0.5,
+    "forward_lean_change_deg": 12.0,
+    "torso_approach_speed_threshold": 0.08
+  },
+  "privacy": {
+    "events_dir": "events",
+    "retention_days": 30,
+    "save_images": false,
+    "save_face_identifiers": false,
+    "blur_faces_in_outputs": true
+  },
+  "alerts": {
+    "terminal_bell": true,
+    "machine_control_enabled": false
+  }
+}

@@ -1,0 +1,5 @@
+# Validated application dependencies / 已验证的直接依赖
+numpy==2.3.5
+opencv-contrib-python==5.0.0.93
+mediapipe==1.0.0
+pyserial==3.5

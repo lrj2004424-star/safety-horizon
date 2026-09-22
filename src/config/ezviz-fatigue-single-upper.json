@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "source_requirements": {
+    "min_width_px": 1280,
+    "min_height_px": 720
+  },
+  "stations": [
+    {
+      "station_id": "upper_station",
+      "config": "video32-upper.example.json",
+      "crop": [0.46, 0.02, 0.94, 0.78],
+      "enabled": true,
+      "crop_verified": true,
+      "zones_calibrated": false,
+      "min_crop_width_px": 500,
+      "min_crop_height_px": 400,
+      "pose_interval_frames": 2
+    }
+  ]
+}

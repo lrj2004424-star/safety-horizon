@@ -1,0 +1,378 @@
+[
+  {
+    "path": "src/annotate.py",
+    "original_sha256": "60092ddac2e11cf1a90c0042706e9f45d87eacf83737e101bb757ea9d6841feb"
+  },
+  {
+    "path": "src/app.py",
+    "original_sha256": "e18f8688530c2c01b69eb2e5389b93dda26d1e8ed440114a3a370cc0b8e1f1e3"
+  },
+  {
+    "path": "src/calibrate.py",
+    "original_sha256": "e2d613eeef70d2dcc28f86ed40110418515f5c4f6f14c0d27a840e792cd59804"
+  },
+  {
+    "path": "src/calibrate_fixed_camera.py",
+    "original_sha256": "71e350422b15427c476b3679d965954e1a1b6d30739abae1e07416dab96fa977"
+  },
+  {
+    "path": "src/calibrate_wide_layout.py",
+    "original_sha256": "da5ab1f5082e028b46bb28099e22b125f6a25dc38582a26f0dd0b8bd34618419"
+  },
+  {
+    "path": "src/camera_probe.py",
+    "original_sha256": "e3ea9408eccf37de0ae8cb9cc0be092b6f62c04e7ce7e7f22bda8562197a401b"
+  },
+  {
+    "path": "src/computer_buzzer_simulator.py",
+    "original_sha256": "ff865501fbc76dd32566fa77cb9bab10935e2d453bb782e72d61258870fe6c11"
+  },
+  {
+    "path": "src/config/ezviz-fatigue-multistation.json",
+    "original_sha256": "a0c8ee21f758c159b1fa19c2c1d75af3ddce82d555d8d502824524aefeee7ed2"
+  },
+  {
+    "path": "src/config/ezviz-fatigue-single-upper.json",
+    "original_sha256": "0431dc8003177e69066d576a232050ff012e7c8544cde837ab607531ff079c68"
+  },
+  {
+    "path": "src/config/machine-state.example.json",
+    "original_sha256": "cd06b3914b009ad08d37b7e3146d2e6accdabe052f34a41e6e0f7f10511bd0e6"
+  },
+  {
+    "path": "src/config/station.example.json",
+    "original_sha256": "e26cda37655c2a16fa3f76458f84fed52063c4d8a460a4fe177f769d392f2664"
+  },
+  {
+    "path": "src/config/video-21.fixed-8p5.json",
+    "original_sha256": "8f8a0b684fbde77bc21df7527b26ceeaff6b5cc729a10e497c0906b2f6cb059e"
+  },
+  {
+    "path": "src/config/video-21.offline.json",
+    "original_sha256": "e6beed3aef6b9684f94956f60d94c25b0435444950a253f0c0821f0dc47715ea"
+  },
+  {
+    "path": "src/config/video32-lower.example.json",
+    "original_sha256": "9801a91f798902d90ada7046b887b2655f747be56c61692985eddfe294d7b2b9"
+  },
+  {
+    "path": "src/config/video32-upper.example.json",
+    "original_sha256": "32b5bb1956a07774cfc86fc49ca10f9cf60a4de187f00073f3beecdace96a266"
+  },
+  {
+    "path": "src/config/video32-wide.example.json",
+    "original_sha256": "6a0365550feecb632c008c0c545e03cfb3077592ab7712c66a4aae8830257662"
+  },
+  {
+    "path": "src/evaluate_offline.py",
+    "original_sha256": "5f082daab09a7d96d6f65d37f4fb53beadbea340b2a99e5455812610079b3ce3"
+  },
+  {
+    "path": "src/ezviz_monitor.py",
+    "original_sha256": "07098c076875c69d198d800b673f6af2d26c432f18a83c64ba5bc66e365b667b"
+  },
+  {
+    "path": "src/ezviz_multistation_fatigue_monitor.py",
+    "original_sha256": "a1b3c79a07ebae1bf3279ecd9df351219da70a91f314a5e058b5dbd90b4ed783"
+  },
+  {
+    "path": "src/ezviz_window_monitor.py",
+    "original_sha256": "0a62102cffe913020119b5b39a8066008479cd398df6630df2784558dc1f39f4"
+  },
+  {
+    "path": "src/factory_preflight.py",
+    "original_sha256": "a237a25be59d683ce75d3ba097c0af4b444d71356fe8f82fbcdabd52dcc71848"
+  },
+  {
+    "path": "src/fatigue_window_monitor.py",
+    "original_sha256": "471a55555a0e66183f8902b49829108c43d31aae199eb65e497c68e4aa9b7a97"
+  },
+  {
+    "path": "src/generate_alert_sounds.py",
+    "original_sha256": "a678deb620b509010ef11c7254e4affaecdd73c665cfe01b84fd6a17fb87ca45"
+  },
+  {
+    "path": "src/hardware/arduino_buzzer_basic_test/arduino_buzzer_basic_test.ino",
+    "original_sha256": "0818a2e5b1e1e1c3ac7ab36ed2dcaab43472b7ab762c10a0774cfd7416e5b6c1"
+  },
+  {
+    "path": "src/hardware/arduino_status_indicator/arduino_status_indicator.ino",
+    "original_sha256": "fa4b2a83d3cf6934dc4b00ce0bd2453689424764ec469566fbb8dc2f716d5464"
+  },
+  {
+    "path": "src/indicator_bridge.py",
+    "original_sha256": "fade91b32c3ce6421d07ac3a3f795f3eb84ceea95bec9196b2db4389d2f63a44"
+  },
+  {
+    "path": "src/live_multicam.py",
+    "original_sha256": "cc9cb981b5e477827a3cc934b559f66b69de79481182aa76deeeb36c35063be7"
+  },
+  {
+    "path": "src/macos_window_capture/EZVIZWindowCapture.swift",
+    "original_sha256": "092a9bf63516ecd895ee15d1a41ea77e3befb7b67e2f514becc609e56ee7d1ec"
+  },
+  {
+    "path": "src/macos_window_capture/EZVIZWindowCaptureCG.c",
+    "original_sha256": "7e237160a146195a04ecd32ccc3bc90c9ff0548202ca5eaa7b641408212a903f"
+  },
+  {
+    "path": "src/macos_window_capture/ezviz_window_list.c",
+    "original_sha256": "017564090f4411386f4175e6c16377871e1367f4211bc66cdcb013fcf69a16f3"
+  },
+  {
+    "path": "src/macos_window_capture/list_window_frames.swift",
+    "original_sha256": "f02da38189851a41f3ef4a2a0740a08376b1ab0b597ed6fe2da2bb9c73c8446a"
+  },
+  {
+    "path": "src/safety_monitor/__init__.py",
+    "original_sha256": "a46045796d06660b72f7df877040f7e5c64775084ef9e496f558a042bb50d8f0"
+  },
+  {
+    "path": "src/safety_monitor/audio_alerts.py",
+    "original_sha256": "5c42a53c652d1f0da9440147853588a0e3c92a4cb8d0e5603623f83931c5b78a"
+  },
+  {
+    "path": "src/safety_monitor/camera_device.py",
+    "original_sha256": "1b1d72bffcb27bf61c04a590a2528aab0f3ad913d3021967e996d4235a26584e"
+  },
+  {
+    "path": "src/safety_monitor/capture_manager.py",
+    "original_sha256": "59179c57940fade68793873945b60b2c6e9457d3879717c05873b4f2b9f0d83d"
+  },
+  {
+    "path": "src/safety_monitor/config.py",
+    "original_sha256": "14e4f650837da89ad7b798f1e98245a81219d9abf26f6b9bd462bfa267ada430"
+  },
+  {
+    "path": "src/safety_monitor/event_store.py",
+    "original_sha256": "0a880737a7ed6391881fceadc2ac6895198aa2c92f6af6e4261f1d39556a7b8c"
+  },
+  {
+    "path": "src/safety_monitor/fatigue_engine.py",
+    "original_sha256": "5ce9c259299fb8cd57619ca0f3cfac974b86e5b723ea06a178b68b691410a605"
+  },
+  {
+    "path": "src/safety_monitor/fatigue_status.py",
+    "original_sha256": "ea6d1608b1f131eb7d4219d2a4cc14f048f00c4690f45800dd37ceea10812ad0"
+  },
+  {
+    "path": "src/safety_monitor/fatigue_visualization.py",
+    "original_sha256": "8968ead8a174e87a7664010025d9de706454be07dc472cd58415c5d60c9fd17c"
+  },
+  {
+    "path": "src/safety_monitor/feature_store.py",
+    "original_sha256": "1bd1b0b77f30ef3876c2ca477737f657fd343a8160776379b36490228dcdaf31"
+  },
+  {
+    "path": "src/safety_monitor/fixed_camera_guard.py",
+    "original_sha256": "d07bfc786cd434bcc60e145e163d0ccf1c4cb5c2751cdc70bb78cf3fd6755ebf"
+  },
+  {
+    "path": "src/safety_monitor/frame_activity.py",
+    "original_sha256": "6f2a245f76779d209886e40fd8f1a18caa9f5c4cc1285f10e42ab5f52ca1575a"
+  },
+  {
+    "path": "src/safety_monitor/geometry.py",
+    "original_sha256": "72cd02b1f471acd74a514337f467b1c40932a2d98527fc4f74c10a9f0651c7ce"
+  },
+  {
+    "path": "src/safety_monitor/hand_tracker.py",
+    "original_sha256": "f01254e17f4b9f50305fe306296033d4509787c68af86690931efc06f7d9263b"
+  },
+  {
+    "path": "src/safety_monitor/input_router.py",
+    "original_sha256": "8a06169d52df45057c705dee33f9d41883eb244be93218c6544f5d3a436a19da"
+  },
+  {
+    "path": "src/safety_monitor/joint_engine.py",
+    "original_sha256": "d3c3d14cb8c6b647f590079665d0bd25e5ce9fbb7379b29748eff313847f911b"
+  },
+  {
+    "path": "src/safety_monitor/joint_visualization.py",
+    "original_sha256": "2bb738f09f945db0bdb1c53378c7209859661ef78e77b6c10f3fa141305a6d8b"
+  },
+  {
+    "path": "src/safety_monitor/machine_motion.py",
+    "original_sha256": "f57369fc2c1eb00e7008ad8c5a6baba8b5359288932e4a0c3b4957ac9e15e4f2"
+  },
+  {
+    "path": "src/safety_monitor/machine_truth.py",
+    "original_sha256": "7c6a91e6260cccd65da437eea30258a27fa96f477c9fa65979e8f6feeb5b856c"
+  },
+  {
+    "path": "src/safety_monitor/pose_tracker.py",
+    "original_sha256": "56d605f8c2569e0bef782c403b1e0cb3fbd7c205d8b79a494cc09b3c19073deb"
+  },
+  {
+    "path": "src/safety_monitor/pre_event_buffer.py",
+    "original_sha256": "998409c5962cdb5223aa7f1403ed3527905f92b1d9160b28dd7c7b1c40e9b2ee"
+  },
+  {
+    "path": "src/safety_monitor/privacy.py",
+    "original_sha256": "643b51f5bd8c86b1aa3302efd399e7fae318dfa38b4486f2569ef379d0ad4a37"
+  },
+  {
+    "path": "src/safety_monitor/review_contract.py",
+    "original_sha256": "6333027c5dcadf2794819aa20b897b65fb9c035fc1317914607cfdc158bdf252"
+  },
+  {
+    "path": "src/safety_monitor/review_controller.py",
+    "original_sha256": "be83f83ef57d440cf45af8dcd5af4c7efb5f66090436fb3057b2a2632558b772"
+  },
+  {
+    "path": "src/safety_monitor/review_store.py",
+    "original_sha256": "0b1a9e3d78d730c71bff9603073cdfaef7499d5ef84a8a837d05154e5ceb7146"
+  },
+  {
+    "path": "src/safety_monitor/risk_engine.py",
+    "original_sha256": "bff74cf4cc4051ca6ba4829984e9c37ae1eaf5777707f06111ad3c85e2eb42c3"
+  },
+  {
+    "path": "src/safety_monitor/serial_connection.py",
+    "original_sha256": "ae8e327117c22888a253e3a5fa1b5c180308b953da101fa6f1600dce4bf8a4d0"
+  },
+  {
+    "path": "src/safety_monitor/status_output.py",
+    "original_sha256": "04726cf79204f747e36753e0ae1ffc122ad1e87a00874cc4ae15e7504bf1126a"
+  },
+  {
+    "path": "src/safety_monitor/threshold_optimizer.py",
+    "original_sha256": "67cd9f26890a253312a6c903e4eb933bab753d464a8c50d565eb8a65a1968990"
+  },
+  {
+    "path": "src/safety_monitor/visualization.py",
+    "original_sha256": "5be3b305b9465b372e8149d020f02da959596ac3fdd4c14369dc128ab6ba6d6b"
+  },
+  {
+    "path": "src/safety_monitor/wide_station.py",
+    "original_sha256": "3bb0f44f9a101f1a00f0016e4533e0b8ce664c66529c6010725ea67c6126fc52"
+  },
+  {
+    "path": "src/safety_monitor/window_capture_device.py",
+    "original_sha256": "e15bf68d49e82c111d17ee1063a40e9fc146fbab2ab5fa8fea36372216c4db1c"
+  },
+  {
+    "path": "src/safety_officer_review.py",
+    "original_sha256": "c608495d3e3c268ae19f1c918bb8abee96c73728a67cd2350ab6a3fb5a2eeef2"
+  },
+  {
+    "path": "src/simulate.py",
+    "original_sha256": "66a430d95cb5396f21dd80ecdafff35f5a7ecb67a77b12e99b4852efb8656c5f"
+  },
+  {
+    "path": "src/sound_check.py",
+    "original_sha256": "4eb453bd61d73a9c61ea6b4da17cae26a2072191e5d2733051df19b751ebd2e1"
+  },
+  {
+    "path": "src/start_touchdesigner_engine.command",
+    "original_sha256": "db8c1f4fe6de498bb06b29f2656cac8569a9b4de33ad601807a5e9d3db06e84d"
+  },
+  {
+    "path": "src/stream_probe.py",
+    "original_sha256": "5aed9986928f6ceb5d839f5fdde1ee7e88798baa6afaf2b0025d29b4602917d3"
+  },
+  {
+    "path": "src/supervise_service.py",
+    "original_sha256": "7615a050edcd3511c7d666c2843dcb1adb00a3e6eb747de8dcd57acf0b99b755"
+  },
+  {
+    "path": "src/tests/test_audio_alerts.py",
+    "original_sha256": "e23535d2178fd582d69b88954f22509ee90340035908886327fdd004b723040a"
+  },
+  {
+    "path": "src/tests/test_camera_device.py",
+    "original_sha256": "c0ad49635b98e38acb1b8391611ecea5327855e3dfc7c9e7aee21806b84a1f8e"
+  },
+  {
+    "path": "src/tests/test_capture_manager.py",
+    "original_sha256": "0c69e9f4a45f552b896f41933773df26f0dbbefcfdac289f4949cb455368430e"
+  },
+  {
+    "path": "src/tests/test_event_store.py",
+    "original_sha256": "127af3ded6f7c1cf8588387d881f81360ba9dc4bbd1dbe1e84cba2943f90df3a"
+  },
+  {
+    "path": "src/tests/test_fatigue_engine.py",
+    "original_sha256": "6ad0095c409ae521685839d41178a5e4623a3979f12e32c83418f5699e1f8a4e"
+  },
+  {
+    "path": "src/tests/test_fixed_camera_guard.py",
+    "original_sha256": "7c5ebb4b6e5155fcf430031e49f015d1c953bba320fd06f429b32fb553bda8e6"
+  },
+  {
+    "path": "src/tests/test_geometry.py",
+    "original_sha256": "4c206c35718b274a6eff5d34a57b03c04ce647a00168280ddb1dc9e603323dc1"
+  },
+  {
+    "path": "src/tests/test_joint_engine.py",
+    "original_sha256": "72f5d01706d6936c6482a2ddfef0862c04dae615be4fbc107b43b12c49c984ea"
+  },
+  {
+    "path": "src/tests/test_lightweight_bridge.py",
+    "original_sha256": "a9a2f4aef28c48b30022995221cf1ebfb01acdb8b14fbbb2a0a4b2a42863605c"
+  },
+  {
+    "path": "src/tests/test_machine_motion.py",
+    "original_sha256": "2379a8db8e7b825d5e0c875b1954b27a4f2ad731435999dbf88a4b876daf43ea"
+  },
+  {
+    "path": "src/tests/test_machine_truth.py",
+    "original_sha256": "034895df07cc4811285df2d0d137ae6e107998b6c2a673fcbb73b63ecd18f49d"
+  },
+  {
+    "path": "src/tests/test_multistation_fatigue.py",
+    "original_sha256": "bb086ddf18c6d48aaf18ba96685ee776b0bce2171441a64773480af4b6ff2e07"
+  },
+  {
+    "path": "src/tests/test_pose_features.py",
+    "original_sha256": "6604b4ace98e54667ff50d18f7c58bec70886b25770064634c5a59213bd8bccc"
+  },
+  {
+    "path": "src/tests/test_pre_event_buffer.py",
+    "original_sha256": "b8b88229a0f49ed1385fe85b85b3c3724ddaf8aae50a83f98702e0990e7573c0"
+  },
+  {
+    "path": "src/tests/test_recovery.py",
+    "original_sha256": "6ca8af8bd53065c2959d55d833f2957d2d80953efee9d04af79cbaa67d42a67c"
+  },
+  {
+    "path": "src/tests/test_release_safety.py",
+    "original_sha256": "f738be0bac9775db3fbc517436882a9a254784bc2adff2ff877d0ba09832aed8"
+  },
+  {
+    "path": "src/tests/test_review_workflow.py",
+    "original_sha256": "54a3490e9279b0f99bee86b101e07b5486ec5d5c872270bf40e4a891a431cdce"
+  },
+  {
+    "path": "src/tests/test_risk_engine.py",
+    "original_sha256": "1725b045a206f1c31d09c5988920a2ac96e06644ab1830a158e9e8621cf61fd4"
+  },
+  {
+    "path": "src/tests/test_serial_connection.py",
+    "original_sha256": "d17c9a5c40b75be81e31d8f1574244ddf20c90f56e8298a09c6d6f06a210330b"
+  },
+  {
+    "path": "src/tests/test_status_output.py",
+    "original_sha256": "376979ebce04a147e2277706126895252f84b797c5d75fd8ee91ce8f995524be"
+  },
+  {
+    "path": "src/tests/test_wide_station.py",
+    "original_sha256": "b88f01ad0dc2871ebbb45e2d235d205912fcc3278b1ea2eee9bce8834193f0d3"
+  },
+  {
+    "path": "src/tests/test_window_capture_device.py",
+    "original_sha256": "aa045b56e25a34d0b58a4481855ec435cd1722c5eea37da6e8fbf5189e78f0c8"
+  },
+  {
+    "path": "src/touchdesigner/build_touchdesigner_project.py",
+    "original_sha256": "b01a8cee92b2d364c5e62418d409a1842facfbe65d48a4d32e9904d6ecdfbc82"
+  },
+  {
+    "path": "src/touchdesigner/td_runtime.py",
+    "original_sha256": "5349dab3c0e259296691ac11b0adfdda0337cea9bcf71092ff508cf87fa3a939"
+  },
+  {
+    "path": "src/wide_multistation.py",
+    "original_sha256": "8063a093203430410d3f76dc3417c6e19fe78793b9fedaba7cb377d59d730edc"
+  }
+]

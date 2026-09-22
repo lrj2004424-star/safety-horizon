@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "source_requirements": {
+    "min_width_px": 1920,
+    "min_height_px": 1080
+  },
+  "stations": [
+    {
+      "station_id": "upper_station",
+      "config": "video32-upper.example.json",
+      "crop": [0.46, 0.05, 0.84, 0.57],
+      "enabled": true,
+      "crop_verified": false,
+      "zones_calibrated": false,
+      "min_crop_width_px": 600,
+      "min_crop_height_px": 420,
+      "pose_interval_frames": 3
+    },
+    {
+      "station_id": "lower_station",
+      "config": "video32-lower.example.json",
+      "crop": [0.0, 0.48, 0.58, 1.0],
+      "enabled": true,
+      "crop_verified": false,
+      "zones_calibrated": false,
+      "min_crop_width_px": 700,
+      "min_crop_height_px": 400,
+      "pose_interval_frames": 3
+    }
+  ]
+}
