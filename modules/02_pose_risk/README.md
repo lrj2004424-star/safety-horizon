@@ -7,3 +7,6 @@
 开发参数：`cd src` 后 `../.venv/bin/python ezviz_multistation_fatigue_monitor.py --help`。完整启动使用根目录 `horizon.py run`，不要将默认多工位配置误当成当前单工位配置。
 
 此模块产生的是辅助风险，不是疲劳医学诊断或已发生伤害。缺失骨架、不可靠机位、遮挡不能判定安全。
+# Platform commands / 平台命令
+
+以下 `.venv/bin/python` 是 macOS 写法。Windows 在项目根目录用 `.venv\Scripts\python.exe`，进入 `src` 后用 `..\.venv\Scripts\python.exe`；命令其余参数相同（使用 PowerShell）。完整工作流优先使用对应平台的 `02_run` 菜单，不单独运行模块。

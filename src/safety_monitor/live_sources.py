@@ -20,7 +20,7 @@ def validate_config(config):
     else:
         if not isinstance(config.get('window_title'), str) or not config['window_title'].strip():
             raise ValueError('An exact window title is required')
-        if not config.get('process_name'):
+        if not isinstance(config.get('process_name'), str) or not config['process_name'].strip():
             raise ValueError('Select a window with its process name')
     roi = config.get('roi', [0, 0, 1, 1])
     if (not isinstance(roi, list) or len(roi) != 4 or

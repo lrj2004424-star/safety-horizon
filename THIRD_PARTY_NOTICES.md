@@ -11,6 +11,9 @@
 | MediaPipe models | 官方来源，安装时用固定 SHA-256 锁定内容 | https://ai.google.dev/edge/mediapipe/solutions/vision/pose_landmarker |
 | NumPy | 数值计算 | https://numpy.org/ |
 | pySerial | 可选串口 | https://pyserial.readthedocs.io/ |
+| pywin32 | Windows 窗口信息及进程回收 | https://github.com/mhammond/pywin32 |
+| MSS | Windows 指定视频区域采集 | https://github.com/BoboTiG/python-mss |
+| tzdata | 两平台统一时区数据 | https://github.com/python/tzdata |
 | TouchDesigner | 可选节点界面，单独账号/授权 | https://derivative.ca/download / https://derivative.ca/UserGuide/Licensing |
 | 萤石 | 用户登录并授权的摄像头客户端 | https://www.ys7.com/ |
 | Arduino | 可选固件工具及板卡 | https://www.arduino.cc/en/software |

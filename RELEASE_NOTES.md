@@ -19,7 +19,9 @@
 
 ## 验证与限制
 
-实际自动测试状态见 [Actions](https://github.com/lrj2004424-star/safety-horizon/actions)，范围见 `docs/08_VALIDATION.md`。软件测试不代替真实摄像头、板卡和目标现场验收。
+macOS ARM64 与 Windows x64 云端回归均已通过：每平台 147 项通过、1 项非本平台测试跳过；含真实模型推理、合成视频处理和解压副本回归。Windows 安装脚本创建的新环境亦通过检查。记录见 [Actions](https://github.com/lrj2004424-star/safety-horizon/actions/runs/35723516394)，范围见仓库 `docs/08_VALIDATION.md`。
+
+这些是软件验证，不代替实际萤石客户端、摄像头、板卡和目标现场验收。
 
 Windows 窗口视频区域需可见、无遮挡；RTSP 需要设备支持和授权。新机位须重新标定。Windows 使用浏览器界面，不提供已验收的 Windows TD 节点工程。
 

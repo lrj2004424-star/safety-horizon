@@ -1,48 +1,35 @@
-# 08 Validation Record / 干净环境验证记录
+# 08 Validation / 双平台验证记录
 
-Date / 日期：2026-09-21。Release / 版本：v0.1.0-rc.1。
+2026-09-22 · v0.2.0-rc.1 · Python 3.12 · Pre-release
 
-Documentation update / 文档更新：2026-09-22，仅更新验收说明，未修改程序代码。
+## Automated verification / 已通过的软件检查
 
-## Author field report / 作者现场测试报告
+[可核对的双平台运行记录](https://github.com/lrj2004424-star/safety-horizon/actions/runs/35723516394)。最终发布提交也由同一 Actions 工作流检查，见仓库 Actions。
 
-Safety Horizon--Lrj 确认已完成现场及真实硬件验收测试，报告测试准确率为 **91%–100%**。此为作者提供的测试结论，与下表由本次发布过程执行的软件检查分开记录。
-
-该报告没有在本包中附带统计指标定义、样本量、分母、混淆矩阵、具体测试版本与硬件清单；本次文档修订未独立复算该准确率。作者计划后续拍摄现场证据。不能据此将 141 项测试通过率当作识别准确率，或把作者结论扩展到 Windows、新工厂和任意工况。
-
-## Environment / 环境
-
-- Apple Silicon M4 Pro，macOS 26.6.2；同一台 Mac 的新环境，不是厂家另一台机器。
-- 独立下载 CPython 3.12.13，建立全新虚拟环境；没有复制原环境、没有开启 system-site-packages。
-- 从 PyPI 按 requirements.lock 的版本和哈希安装 20 个依赖；`pip check` 无冲突。
-- 原正式 TD 工程未修改。模型从 Google 官方源重新下载并按原模型哈希核验，不把旧虚拟环境塞进包中。
-
-## Results / 已执行检查
-
-| Test | Result | Scope / 边界 |
+| 检查 | macOS | Windows |
 |---|---|---|
-| Existing regression | 132 项通过 | 原视觉、审核、存储和模拟硬件逻辑 |
-| Release integration | 9 项通过 | HTTP 身份/Origin/Host校验、过期状态、回执、落盘、重复提交、模拟静音、逐帧解码、保护原图 |
-| Dependency installation | PASS | 新 Python + 锁定安装 + pip check |
-| Model checksums | 3 / 3 PASS | Full Pose、Lite Pose、Hand 与原工程模型哈希相同 |
-| Actual model load/inference | 3 / 3 PASS | 真实模型在合成空白图推理，无伪造人体/手部；不是实际工人检测准确率测试 |
-| Native build | PASS | CoreGraphics C、窗口枚举 C、ScreenCaptureKit Swift 本机源码编译 |
-| Browser UI | PASS for inspected state | RUNNING/TEST/无视频等待状态、按钮回执、禁止不足样本审批；1280px 宽无面板横向溢出 |
-| Public file allowlist | PASS at packaging | 仅源码、生成诊断音效、文档与元数据；不带现场录像/账户/annotations/缓存/模型/venv |
-| Extracted archive regression | 141 / 141 PASS | 发布 ZIP 解压到独立临时目录，使用上述新 Python 环境；132 项核心 + 9 项发布接口测试，进程退出码 0，文件 SHA-256 全部一致 |
+| 环境 | macOS 14 ARM64 云端执行器 | Windows Server 2025 x64 云端执行器 |
+| 锁定依赖安装及 pip check | 通过 | 通过 |
+| 132 项核心测试 | 132 通过 | 131 通过；跳过 1 项 macOS 原生助手测试 |
+| 16 项发布接口/平台测试 | 15 通过；跳过 1 项 Windows Job 测试 | 16 通过 |
+| 三个真实模型下载、哈希及空白图推理 | 通过 | 通过 |
+| 合成视频 → 实际姿态模型 → TEST 仪表盘 | 通过 | 通过 |
+| 两个 ZIP 的逐文件校验 | 通过 | 通过 |
+| 本平台 ZIP 解压后全部回归 | 通过，数量及跳过项同上 | 通过，数量及跳过项同上 |
+| Windows 安装脚本及新 .venv 回归 | 不适用 | 通过（执行器已提供 uv） |
 
-## Issues found and corrected / 本次确实发现并修复
+跨平台测试包括文件锁互斥、来源校验、裁切边界、RTSP 超时参数、审核服务启停、Windows 子进程强制回收；接口测试包含身份校验、落盘回执、重复提交保护、测试静音和视频解码。未通过降低业务断言来消除平台错误。
 
-1. 原部署依赖本机已存在的诊断音效；发布副本现由项目生成脚本生成，再包含到包内。
-2. Swift 单独编译需要 `-parse-as-library`；构建脚本补齐，编译通过。
-3. Full Pose 的官方 `/1` 文件与原工程 `/latest` 内容不同。保留原模型哈希；Full 从官方 latest 下载但严格核验固定哈希，上游变化即拒绝，不悄悄更换模型。
-4. 新增独立界面必须有真实命令回执、旧命令互斥及本机接口权限，不能仅画按钮。
-5. 样本不足时文案明确说明不能应用建议，不误写为已产生 PROPOSED。
+本机另使用独立 CPython 3.12.13 环境验证 macOS 解压副本；不复用原 TD 虚拟环境。受限沙盒会禁止本地 HTTP 端口，接口测试须在允许 localhost 的环境执行。
 
-模型首次在受限沙盒中因系统图形服务不可用终止；在获得正常图形访问权限后复测通过。不能将沙盒内失败隐藏为成功，也不据此更换模型。
+## Scope / 不混淆验证范围
 
-## Outside this release verification / 本次发布验证未覆盖
+- Windows 10/11 x64 是目标使用平台；云端 Windows Server 测试不等于每种 Windows 客户端和摄像头都已现场验收。
+- 实际模型推理已运行，但合成视频不是员工或事故样本，测试通过率不是识别准确率。
+- 未独立执行：Windows 萤石 PC 客户端实机采集、实际 RTSP 摄像头、双屏/DPI、真实 UNO 热插拔与声音、厂家整班运行，以及完全没有工具的新机全流程。
+- macOS 原生采集助手在上一版本机已编译通过；本次不改原正式 TD 工程。Windows TD 节点工程不在本版支持路径。
+- 包含白名单源码、文档、生成诊断音效；不包含现场录像、审核记录、账户、模型或旧虚拟环境。
 
-作者已报告现场和硬件验收，本次发布过程并未独立执行或复核这些现场步骤。完整引导脚本在“全无工具的新 Mac”从零双击、另一台厂家机器、Windows/Linux/Intel、真实 UNO 热插拔、摄像头直播真实性、现场机位/风险标定、整班性能，以及新生成 TD 工程的界面/按钮/退出行为，不能由本次代码回归代替逐项验收。详见 07_FACTORY_ACCEPTANCE。
+## Author field report / 作者现场报告
 
-本包继续标为 **Pre-release 软件候选版**。本文不是生产准入或工业安全认证文件；准确率区间仅按作者报告归属陈述，不作零漏报、全平台即用或任意现场可直接投产的承诺。
+Safety Horizon--Lrj 确认已完成其原现场及真实硬件验收，报告准确率 **91%–100%**。该结论归属于作者，不与上述自动化测试混算，也不自动延伸为新 Windows 适配或所有部署场景的性能保证。目标现场核验见 [07_FACTORY_ACCEPTANCE](07_FACTORY_ACCEPTANCE.md)。

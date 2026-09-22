@@ -1,6 +1,6 @@
 # 10 Project & Test Statement / 项目介绍与测试说明
 
-Documentation revision / 文档修订：2026-09-22 · v0.1.0-rc.1 · Safety Horizon--Lrj
+Documentation revision / 文档修订：2026-09-22 · v0.2.0-rc.1 · Safety Horizon--Lrj
 
 ## Public introduction / 对外项目介绍
 
@@ -16,7 +16,7 @@ Safety Horizon is a visual risk-assistance and human-review system designed by *
 |---|---|---|
 | 作者完成现场与真实硬件验收测试 | 作者对其测试现场和硬件提供的结论 | 不等于本公开发布副本已在每家厂家重新验收 |
 | 作者报告准确率 91%–100% | 作者提供的测试区间 | 不等于 100% 检出所有危险、零漏报或各子功能均达到该范围 |
-| 141 / 141 软件测试通过 | 解压副本在本机独立 Python 环境的自动化检查结果 | 不是 141 个真实事故样本，也不是现场识别准确率 |
+| 软件回归通过 | 对应平台的代码、模型及解压副本检查，具体结果见 08_VALIDATION | 不是事故样本数量，也不是现场识别准确率 |
 | 人工审核 | 安全员结合事件证据作出判断和处置 | 不能保证发现未进入队列的所有漏报，也不能替代机器防护 |
 | MIT 许可 | 项目代码的使用和分发许可 | 不等于工业安全认证、第三方软件授权或生产准入 |
 
@@ -26,6 +26,6 @@ Safety Horizon is a visual risk-assistance and human-review system designed by *
 
 ## Platform & deployment / 平台与部署
 
-本候选包提供 **Apple Silicon macOS** 安装运行路径和可选 TD 构建源码。Windows 三种输入方式（萤石 PC 窗口 / RTSP / 本地视频）属于已确认的适配需求，**不是当前版本已完成的 Windows 支持**。平台选择见 [01_INSTALL](01_INSTALL.md)。
+本版分为 **macOS（Apple Silicon）** 与 **Windows（x64）** 两个完整包，提供各自安装入口和依赖锁。支持窗口、RTSP、本地测试视频三种输入；独立浏览器审核不依赖 TouchDesigner。可选 TD 构建路径仅面向 macOS。平台选择见 [01_INSTALL](01_INSTALL.md)，实测范围见 [08_VALIDATION](08_VALIDATION.md)。
 
 系统用于风险辅助观察，不替代机器联锁、现场安全制度、专业安全评估或员工必要防护。不将作者自测结论表述成工业安全认证，也不据此承诺可在任意现场无条件直接投产。

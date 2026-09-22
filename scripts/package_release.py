@@ -51,7 +51,10 @@ def purpose(path):
             doc = None
         if doc:
             return doc.splitlines()[0].replace("|", "/")[:160]
-    categories = [("src/tests/", "Core regression / 核心模块测试"),
+    categories = [("platforms/macos/", "macOS install/run/test guide / 苹果电脑入口"),
+        ("platforms/windows/", "Windows install/run/test guide / Windows 电脑入口"),
+        (".github/", "Cross-platform CI / 两平台自动化验证"),
+        ("src/tests/", "Core regression / 核心模块测试"),
         ("release_tests/", "Release integration tests / 发布接口测试"),
         ("src/config/", "Example / research configuration; recalibrate / 示例配置需现场标定"),
         ("src/hardware/", "Arduino firmware / 板卡固件"),

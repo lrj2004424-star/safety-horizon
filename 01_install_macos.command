@@ -25,4 +25,4 @@ if [[ ! -x .venv/bin/python ]]; then "$UV" venv --python 3.12 --seed .venv; fi
 .venv/bin/python -m pip check
 .venv/bin/python scripts/setup_assets.py --download-models
 .venv/bin/python horizon.py doctor
-echo 'Done / 安装完成。下一步：02_run_standalone.command。实时采集需执行 scripts/build_capture.sh。'
+echo 'Done / 安装完成。下一步：bash platforms/macos/02_run.command。仅窗口采集需编译 scripts/build_capture.sh。'

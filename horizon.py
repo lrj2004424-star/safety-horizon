@@ -119,16 +119,23 @@ def run(args):
                 raise RuntimeError(f"Child service stopped: {dead}; stopping owned session safely")
             time.sleep(0.25)
     finally:
-        if portal:
-            portal.close()
-        ReviewStore(SRC / "annotations", actuator_path=runtime / "review-actuator.json").publish_silent("session_stopping")
-        # Review exits first and writes SILENT while consumers are still alive.
-        for _, p in children:
-            stop_child(p)
-        job.close()
-        for f in log_handles:
-            f.close()
-        instance_lock.close()
+        try:
+            if portal:
+                portal.close()
+            ReviewStore(SRC / "annotations", actuator_path=runtime / "review-actuator.json").publish_silent("session_stopping")
+        finally:
+            # Disk/interface failures must not bypass child-process cleanup.
+            try:
+                for name, p in children:
+                    try:
+                        stop_child(p)
+                    except (OSError, subprocess.TimeoutExpired) as error:
+                        print(f'Cleanup warning ({name}): {type(error).__name__}', file=sys.stderr)
+            finally:
+                job.close()
+                for f in log_handles:
+                    f.close()
+                instance_lock.close()
     return 0
 
 

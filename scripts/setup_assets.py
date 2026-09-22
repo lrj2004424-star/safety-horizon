@@ -24,7 +24,8 @@ def download():
         version = "latest" if name == "pose_landmarker_full.task" else "1"
         url = f"https://storage.googleapis.com/mediapipe-models/{model}/float16/{version}/{name}"
         if not out.exists():
-            request = urllib.request.Request(url, headers={"User-Agent": "SafetyHorizon/0.1.0-rc.1"})
+            version_label = (ROOT / 'VERSION').read_text(encoding='utf-8').strip()
+            request = urllib.request.Request(url, headers={"User-Agent": "SafetyHorizon/" + version_label})
             with urllib.request.urlopen(request, timeout=90) as response:
                 data = response.read(50 * 1024 * 1024)
             if hashlib.sha256(data).hexdigest() != digest:
