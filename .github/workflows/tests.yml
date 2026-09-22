@@ -26,6 +26,12 @@ jobs:
         run: python -m pip check
       - name: Regression (no hardware)
         run: python horizon.py test
+      - name: Official model checksums
+        run: python scripts/setup_assets.py --download-models
+      - name: Actual model inference (synthetic, no hardware)
+        run: python scripts/smoke_models.py
+      - name: Actual local video pipeline (synthetic, no alerts)
+        run: python scripts/smoke_video.py
       - name: Windows installer syntax
         if: runner.os == 'Windows'
         shell: pwsh

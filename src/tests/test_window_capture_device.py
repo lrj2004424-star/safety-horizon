@@ -36,6 +36,7 @@ class WindowCaptureDeviceTests(unittest.TestCase):
         assert selected is not None
         self.assertEqual(selected["window_id"], 10)
 
+    @unittest.skipIf(os.name == "nt", "macOS native helper uses POSIX executable pipes")
     def test_reads_fixed_bgra_frame_from_helper(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             helper = Path(directory) / "fake_capture.py"
