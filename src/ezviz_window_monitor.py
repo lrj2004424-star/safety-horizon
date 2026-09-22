@@ -17,6 +17,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--window-app", default=EZVIZ_BUNDLE_ID)
     parser.add_argument("--window-title")
+    parser.add_argument('--source-config')
     parser.add_argument(
         "--window-helper",
         default=str(ezviz_multistation_fatigue_monitor.DEFAULT_WINDOW_HELPER),
@@ -128,6 +129,8 @@ def main(argv: list[str] | None = None) -> int:
         app_args.extend(["--risk-card-output", args.risk_card_output])
     if args.input_mode_json:
         app_args.extend(["--input-mode-json", args.input_mode_json])
+    if args.source_config:
+        app_args.extend(['--source-config', args.source_config])
     if args.active_thresholds_json:
         app_args.extend(["--active-thresholds-json", args.active_thresholds_json])
     app_args.extend(["--dashboard-output-fps", str(args.dashboard_output_fps)])

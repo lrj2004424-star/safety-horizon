@@ -15,11 +15,15 @@ ROOT = Path(__file__).resolve().parent
 SRC = ROOT / "src"
 sys.path.insert(0, str(SRC))
 os.environ.setdefault("MPLCONFIGDIR", str(ROOT / ".cache/matplotlib"))
+os.environ.setdefault("PYTHONUTF8", "1")
 
 
 def doctor():
     checks = {"python_3_12": sys.version_info[:2] == (3, 12)}
-    for module in ("cv2", "mediapipe", "numpy", "serial"):
+    modules = ['cv2', 'mediapipe', 'numpy', 'serial', 'tzdata']
+    if os.name == 'nt':
+        modules += ['win32job', 'win32gui', 'mss']
+    for module in modules:
         checks[module] = importlib.util.find_spec(module) is not None
     checks["models"] = all((SRC / "models" / name).is_file() for name in
                             ("pose_landmarker_full.task", "pose_landmarker_lite.task", "hand_landmarker.task"))
@@ -32,20 +36,24 @@ def doctor():
 def run(args):
     from safety_monitor.review_store import ReviewStore
     from web_portal import Portal
-    import fcntl
+    from safety_monitor.platform_runtime import lock_file, OwnedJob, stop_child
+    from safety_monitor.live_sources import load_source_config
     if args.alerts != "none" and (args.test_video or args.no_vision):
         raise ValueError("Test/no-camera sessions cannot start audible outputs")
     if not args.no_vision and doctor():
         return 2
-    if not args.no_vision and not args.test_video and platform.system() != "Darwin":
-        raise ValueError("EZVIZ window capture requires macOS; other platforms are not release-validated")
+    source_config = load_source_config(args.source_config) if args.source_config else None
+    if not args.no_vision and not args.test_video and platform.system() != "Darwin" and not source_config:
+        raise ValueError("Windows requires --source-config; use platforms/windows/02_run.cmd")
     runtime = SRC / "runtime"
     runtime.mkdir(exist_ok=True)
-    lock_file = (runtime / "standalone.lock").open("a+")
+    instance_lock = (runtime / "standalone.lock").open("a+b")
     try:
-        fcntl.flock(lock_file, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        lock_file(instance_lock, blocking=False)
     except BlockingIOError:
+        instance_lock.close()
         raise ValueError("Another Safety Horizon session is active / 已有实例运行")
+    job = OwnedJob()
     children, log_handles = [], []
     portal = None
     running = True
@@ -54,12 +62,18 @@ def run(args):
         running = False
     signal.signal(signal.SIGINT, stop)
     signal.signal(signal.SIGTERM, stop)
+    if hasattr(signal, 'SIGBREAK'):
+        signal.signal(signal.SIGBREAK, stop)
     def spawn(name, argv):
         handle = (runtime / (name + ".log")).open("ab")
         log_handles.append(handle)
-        p = subprocess.Popen([sys.executable, *argv], cwd=SRC, stdin=subprocess.DEVNULL,
-                             stdout=handle, stderr=handle)
+        options = {'creationflags': subprocess.CREATE_NEW_PROCESS_GROUP} if os.name == 'nt' else {}
+        p = subprocess.Popen([sys.executable, 'owned_worker.py', *argv], cwd=SRC, stdin=subprocess.PIPE,
+                             stdout=handle, stderr=handle, **options)
         children.append((name, p))
+        job.attach(p)  # worker is blocked until safely owned, including its future children
+        p.stdin.write(b'GO\n')
+        p.stdin.close()
         return p
     try:
         test_file = None
@@ -84,6 +98,8 @@ def run(args):
                 argv += ["--" + flag, str(runtime / ("touchdesigner-" + name + ".jpg"))]
             argv += ["--input-mode-json", str(runtime / "vision-input-mode.json"),
                      "--active-thresholds-json", str(SRC / "config/fatigue-thresholds.active.json")]
+            if source_config:
+                argv += ['--source-config', str(Path(args.source_config).resolve()), '--full-window']
             spawn("vision", argv)
         if args.alerts == "uno":
             spawn("arduino", ["indicator_bridge.py", "--review-json", str(runtime / "review-actuator.json"),
@@ -108,16 +124,11 @@ def run(args):
         ReviewStore(SRC / "annotations", actuator_path=runtime / "review-actuator.json").publish_silent("session_stopping")
         # Review exits first and writes SILENT while consumers are still alive.
         for _, p in children:
-            if p.poll() is None:
-                p.terminate()
-                try:
-                    p.wait(timeout=6)
-                except subprocess.TimeoutExpired:
-                    p.kill()
-                    p.wait(timeout=3)
+            stop_child(p)
+        job.close()
         for f in log_handles:
             f.close()
-        lock_file.close()
+        instance_lock.close()
     return 0
 
 
@@ -126,17 +137,22 @@ def main():
     sub = p.add_subparsers(dest="command", required=True)
     sub.add_parser("doctor", help="Environment checks / 环境检查")
     sub.add_parser("test", help="Regression tests / 回归测试，不操作硬件")
+    sub.add_parser('configure', help='Choose window / RTSP / file interactively')
     r = sub.add_parser("run", help="Start all core services / 启动完整独立工作流")
     r.add_argument("--no-vision", action="store_true", help="UI/review service only; no synthetic detections")
     r.add_argument("--no-browser", action="store_true")
     r.add_argument("--no-web", action="store_true", help="For TouchDesigner only")
     r.add_argument("--test-video", help="Authorized file under src/test_videos")
+    r.add_argument('--source-config', help='Private JSON source config; no credentials in command line')
     r.add_argument("--port", type=int, default=8765)
     r.add_argument("--alerts", choices=["none", "computer", "uno"], default="none")
     r.add_argument("--parent-pid", type=int, help=argparse.SUPPRESS)
     args = p.parse_args()
     if args.command == "doctor":
         return doctor()
+    if args.command == 'configure':
+        from safety_monitor.live_sources import configure
+        return configure(ROOT)
     if args.command == "test":
         for directory, cwd in (("tests", SRC), ("release_tests", ROOT)):
             code = subprocess.call([sys.executable, "-m", "unittest", "discover", "-s", directory, "-v"], cwd=cwd)

@@ -519,6 +519,8 @@ def main() -> int:
 
     signal.signal(signal.SIGINT, stop)
     signal.signal(signal.SIGTERM, stop)
+    if hasattr(signal, 'SIGBREAK'):
+        signal.signal(signal.SIGBREAK, stop)
     service.start()
     try:
         while running:

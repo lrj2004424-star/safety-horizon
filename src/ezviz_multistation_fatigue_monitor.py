@@ -227,6 +227,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--manifest", default=str(PROJECT_ROOT / "config" / "ezviz-fatigue-multistation.json"))
     parser.add_argument("--window-app", default=EZVIZ_BUNDLE_ID)
     parser.add_argument("--window-title")
+    parser.add_argument('--source-config')
     parser.add_argument("--window-helper", default=str(DEFAULT_WINDOW_HELPER))
     parser.add_argument("--window-crop", default="auto")
     parser.add_argument("--fps", type=int, default=12)
@@ -826,6 +827,9 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     def build_live_capture() -> WindowCaptureDevice:
+        if args.source_config:
+            from safety_monitor.live_sources import build_source
+            return build_source(args.source_config, args.fps)
         return WindowCaptureDevice(
             args.window_helper,
             bundle_id=args.window_app,

@@ -160,7 +160,9 @@ def _write_output(path: Path, payload: dict[str, Any]) -> None:
 
 
 def _uno_present() -> bool:
-    return any(Path("/dev").glob("cu.usbmodem*"))
+    from serial.tools import list_ports
+    from safety_monitor.serial_connection import UNO_IDS
+    return any((p.vid, p.pid) in UNO_IDS for p in list_ports.comports())
 
 
 class ReviewAudioPlayer:
@@ -170,6 +172,10 @@ class ReviewAudioPlayer:
         self.process = None
 
     def stop(self):
+        import os
+        if os.name == 'nt':
+            import winsound
+            winsound.PlaySound(None, 0)
         if self.process is not None and self.process.poll() is None:
             self.process.terminate()
             try:
@@ -181,6 +187,11 @@ class ReviewAudioPlayer:
 
     def play(self, path):
         self.stop()
+        import os
+        if os.name == 'nt':
+            import winsound
+            winsound.PlaySound(str(path), winsound.SND_FILENAME | winsound.SND_ASYNC | winsound.SND_NODEFAULT)
+            return
         self.process = subprocess.Popen(
             ["/usr/bin/afplay", str(path)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
         )
@@ -245,7 +256,10 @@ def main() -> int:
     def stop(_signal, _frame):
         nonlocal running
         running = False
-    previous = {sig: signal.signal(sig, stop) for sig in (signal.SIGINT, signal.SIGTERM)}
+    signals = [signal.SIGINT, signal.SIGTERM]
+    if hasattr(signal, 'SIGBREAK'):
+        signals.append(signal.SIGBREAK)
+    previous = {sig: signal.signal(sig, stop) for sig in signals}
     try:
         return _run(args, player, lambda: running)
     finally:

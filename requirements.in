@@ -3,3 +3,6 @@ numpy==2.3.5
 opencv-contrib-python==5.0.0.93
 mediapipe==1.0.0
 pyserial==3.5
+tzdata>=2025.2,<2027
+pywin32>=310; sys_platform == 'win32'
+mss>=10.1,<11; sys_platform == 'win32'

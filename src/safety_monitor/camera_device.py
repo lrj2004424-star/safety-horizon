@@ -66,8 +66,10 @@ class CameraDevice:
         height: int | None = None,
         fps: float | None = None,
         reconnect_attempts: int = 2,
+        strict_timeouts: bool = False,
     ) -> None:
         self.source = source
+        self.strict_timeouts = strict_timeouts
         self.is_network_stream = is_network_stream_source(source)
         self.is_live = is_live_source(source)
         self.width = width
@@ -96,7 +98,7 @@ class CameraDevice:
                     3000,
                 ],
             )
-            if not capture.isOpened():
+            if not capture.isOpened() and not self.strict_timeouts:
                 capture.release()
                 capture = cv2.VideoCapture(self.source)
         else:

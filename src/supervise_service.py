@@ -90,6 +90,8 @@ def main():
         running = False
     signal.signal(signal.SIGTERM, stop)
     signal.signal(signal.SIGINT, stop)
+    if hasattr(signal, 'SIGBREAK'):
+        signal.signal(signal.SIGBREAK, stop)
     try:
         while running and os.getppid() == parent:
             supervisor.tick(time.monotonic())

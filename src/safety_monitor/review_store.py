@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import csv
-import fcntl
 import io
 import json
 import os
@@ -15,6 +14,7 @@ from datetime import UTC, date, datetime
 from pathlib import Path
 from typing import Any, Callable, Iterable, Iterator, Mapping, Sequence
 from zoneinfo import ZoneInfo
+from .platform_runtime import lock_file, unlock_file
 
 from .review_contract import (
     ContractError,
@@ -92,12 +92,12 @@ class ReviewStore:
     @contextmanager
     def _locked(self) -> Iterator[None]:
         with self._thread_lock:
-            with self.lock_path.open("a+", encoding="utf-8") as lock:
-                fcntl.flock(lock.fileno(), fcntl.LOCK_EX)
+            with self.lock_path.open("a+b") as lock:
+                lock_file(lock)
                 try:
                     yield
                 finally:
-                    fcntl.flock(lock.fileno(), fcntl.LOCK_UN)
+                    unlock_file(lock)
 
     def ingest_snapshot(
         self,

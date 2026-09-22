@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 VERSION = (ROOT / "VERSION").read_text().strip()
 GENERATED = {"FILE_INDEX.md", "SHA256SUMS", "BUILD_MANIFEST.json"}
 TOP_FILES = {"README.md", "LICENSE", "VERSION", "RELEASE_NOTES.md", "THIRD_PARTY_NOTICES.md",
-    "requirements.in", "requirements.lock", ".gitignore", ".python-version", "horizon.py", "web_portal.py",
+    "requirements.in", "requirements.lock", "requirements-windows.lock", ".gitignore", ".python-version", "horizon.py", "web_portal.py",
     "01_install_macos.command", "02_run_standalone.command", "03_test.command", "SOURCE_PROVENANCE.json"}
 
 
@@ -20,8 +20,8 @@ def allowed(rel):
         return True
     if "__pycache__" in rel.parts or rel.name.startswith("."):
         return False
-    if rel.parts[0] in {"docs", "modules", "release_tests", "scripts", "ui", ".github"}:
-        return rel.suffix in {".md", ".py", ".html", ".css", ".js", ".yml", ".sh"}
+    if rel.parts[0] in {"docs", "modules", "release_tests", "scripts", "ui", ".github", "platforms"}:
+        return rel.suffix in {".md", ".py", ".html", ".css", ".js", ".yml", ".sh", ".ps1", ".cmd", ".command"}
     if rel.parts[0] != "src":
         return False
     if len(rel.parts) == 2:
@@ -64,7 +64,7 @@ def purpose(path):
     return next((v for k,v in categories if str(rel).startswith(k)), "Release source or metadata / 发布源码与元数据")
 
 
-def build(output, components=False):
+def build(output, components=False, platforms=False):
     output.mkdir(parents=True, exist_ok=True)
     files = sorted(p for p in ROOT.rglob("*") if p.is_file() and not p.is_symlink() and allowed(p.relative_to(ROOT)) and p.name not in GENERATED)
     for p in files:
@@ -86,6 +86,9 @@ def build(output, components=False):
     (ROOT / "SHA256SUMS").write_text(checksums)
     files.append(ROOT / "SHA256SUMS")
     names = [(f"SafetyHorizon-v{VERSION}-source.zip", None)]
+    if platforms:
+        names = [(f'SafetyHorizon-v{VERSION}-macOS-arm64.zip', ROOT/'platforms/macos'),
+                 (f'SafetyHorizon-v{VERSION}-Windows-x64.zip', ROOT/'platforms/windows')]
     if components:
         names += [(f"SafetyHorizon-v{VERSION}-{d.name}.zip", d) for d in sorted((ROOT / "modules").iterdir()) if d.is_dir()]
     outputs = []
@@ -93,10 +96,18 @@ def build(output, components=False):
         out = output / name
         with zipfile.ZipFile(out, "w", compression=zipfile.ZIP_DEFLATED) as z:
             for p in sorted(files):
+                if module and platforms and p.name == 'SHA256SUMS':
+                    continue
                 z.write(p, "SafetyHorizon/" + str(p.relative_to(ROOT)))
             if module:
-                z.writestr("SafetyHorizon/00_SELECTED_MODULE.md", (module / "README.md").read_text() +
-                           "\n\n此模块包包含同版本共享核心以免缺依赖；只看本模块请从本文入口开始。\n")
+                if platforms:
+                    intro = (module / 'README.md').read_text(encoding='utf-8').encode('utf-8')
+                    z.writestr('SafetyHorizon/00_START_HERE.md', intro)
+                    z.writestr('SafetyHorizon/SHA256SUMS', checksums +
+                        hashlib.sha256(intro).hexdigest() + '  00_START_HERE.md\n')
+                else:
+                    z.writestr("SafetyHorizon/00_SELECTED_MODULE.md", (module / "README.md").read_text() +
+                               "\n\n此模块包包含同版本共享核心以免缺依赖；只看本模块请从本文入口开始。\n")
         outputs.append((name, hashlib.sha256(out.read_bytes()).hexdigest()))
     (output / "SHA256SUMS").write_text("".join(f"{digest}  {name}\n" for name,digest in outputs))
     print(json.dumps({"release_files": len(files), "archives": [name for name,_ in outputs]}, indent=2))
@@ -105,5 +116,6 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--output", type=Path, default=ROOT / "dist")
     p.add_argument("--components", action="store_true")
+    p.add_argument('--platforms', action='store_true')
     a = p.parse_args()
-    build(a.output, a.components)
+    build(a.output, a.components, a.platforms)
